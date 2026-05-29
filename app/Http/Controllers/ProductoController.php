@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        $productos = Producto::with('categoria')->get();
+
+        return view('productos.index', compact('productos'));
     }
 
     /**
@@ -20,7 +23,9 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        $categorias = Categoria::all();
+
+        return view('productos.create', compact('categorias'));
     }
 
     /**
@@ -28,7 +33,9 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Producto::create($request->all());
+
+        return redirect()->route('productos.index');
     }
 
     /**
@@ -36,7 +43,7 @@ class ProductoController extends Controller
      */
     public function show(Producto $producto)
     {
-        //
+        return view('productos.show', compact('producto'));
     }
 
     /**
@@ -44,7 +51,9 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        //
+        $categorias = Categoria::all();
+
+        return view('productos.edit', compact('producto', 'categorias'));
     }
 
     /**
@@ -52,7 +61,9 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
-        //
+        $producto->update($request->all());
+
+        return redirect()->route('productos.index');
     }
 
     /**
@@ -60,6 +71,8 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        //
+        $producto->delete();
+
+        return redirect()->route('productos.index');
     }
 }
