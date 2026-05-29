@@ -16,8 +16,9 @@ class CategoriaFactory extends Factory
      */
     public function definition(): array
     {
+        $categorias = ['Electrónica', 'Ropa', 'Hogar', 'Juguetes', 'Libros', 'Deportes', 'Salud', 'Belleza', 'Automotriz', 'Alimentos'];
         return [
-            'nombre' => fake()->unique()->word(),
+            'nombre' => fake()->unique()->randomElement($categorias),
             'descripcion' => fake()->sentence(),
             'activo' => true,
         ];
